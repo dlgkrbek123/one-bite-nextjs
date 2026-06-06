@@ -45,6 +45,25 @@ useRouter로 router 객체에 접근가능
 
 ------------------------------------------------------------------------
 
+Link 컴포넌트로 이동가능
+
+<header>
+  <Link href="/">index</Link>&nbsp;
+  <Link href="/search">search</Link>&nbsp;
+  <Link href="/book/1">book</Link>
+</header>
+
+
+프로그래매틱하게 이동가능 (back, replace)
+
+const router = useRouter();
+
+const handleClick = () => {
+  router.push("/test");
+};
+
+------------------------------------------------------------------------
+
 npx
 - node package execute
 - npmjs에 있는 패키지를 다운받지 않고 바로 실행
