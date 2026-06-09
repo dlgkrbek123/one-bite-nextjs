@@ -16,6 +16,7 @@ state가 null이면 loading 리턴
 SSR
 - 가징 기본적인 사전렌더링 방식
 - 요청이 들어올때마다 사전 렌더링 수행
+  - 항상 최신데이터를 props로 내려줄 수 있다. 
 
 getServerSideProps를 정의
 - props를 포함하는 객체를 리턴해야함
@@ -27,7 +28,31 @@ getServerSideProps를 정의
 ------------------------------------------------------------------------
 
 SSG
-- 빌드시간에 사전렌더링을 한번만 수행
+- 빌드 시 사전렌더링을 한번만 수행하여 페이지 생성
+- 개발모드로 실행하면 확인 못함
+- 사용자 경험 및 서버 부하에 강점
+- 매번 똑같은 html만 리턴
+  - 정적인 페이지에 적합
+  - 동적인 query, param처리가 불가능하므로 react처럼 마운트 이후 처리 필요
+
+getStaticProps / InferGetStaticPropsType
+getStaticPaths
+- 페이지가 동적인 path를 가지는 경우 어떤 입력이 있을 수 있는지 이 함수를 통해 지정 필요
+
+export const getStaticPaths = ()=> {
+  return {
+    paths: [
+      { params: { id: "1" } },
+      { params: { id: "2" } },
+      { params: { id: "3" } },
+    ],
+    fallback: false
+    // 1,2,3이 아닌애로 오면?
+    // false => notFound 페이지
+    // 'blocking' => SSR처럼 동작하게 처리 (생성된 정적 페이지는 실제로 저장됨, 이후의 요청에는 기존 정적 페이지 리턴)
+    // true => props없는 fallback 페이지 일단 리턴, props 계산후 추후 전달 / router.isFallback
+  }
+}
 
 ------------------------------------------------------------------------
 
