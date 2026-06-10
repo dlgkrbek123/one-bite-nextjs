@@ -1,5 +1,5 @@
 import style from "@/app/(with-searchbar)/layout.module.css";
-import SearchBar from "./SearchBar";
+import SearchBar from "@/components/SearchBar";
 
 export default function SearchLayout({
   children,

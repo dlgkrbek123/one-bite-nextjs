@@ -1,12 +1,14 @@
 "use client";
 
-import { useRouter } from "next/router";
 import { useLayoutEffect, useState } from "react";
-import style from "@/app/(with-searchbar)/searchbar.module.css";
+import { useRouter, useSearchParams } from "next/navigation";
+import style from "@/components/searchbar.module.css";
 
 export default function SearchBar() {
   const router = useRouter();
-  const q = router.query.q as string;
+
+  const searchParams = useSearchParams();
+  const q = searchParams.get("q");
 
   const [search, setSearch] = useState(q ?? "");
 
