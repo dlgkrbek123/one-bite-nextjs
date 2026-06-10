@@ -6,8 +6,8 @@ import style from "@/components/searchbar.module.css";
 
 export default function SearchBar() {
   const router = useRouter();
-
   const searchParams = useSearchParams();
+
   const q = searchParams.get("q");
 
   const [search, setSearch] = useState(q ?? "");
