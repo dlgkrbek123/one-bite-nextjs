@@ -1,4 +1,5 @@
-import style from "@/app/(with-searchbar)/page.module.css";
+import style from "@/app/(with-searchbar)/layout.module.css";
+import SearchBar from "./SearchBar";
 
 export default function SearchLayout({
   children,
@@ -7,16 +8,7 @@ export default function SearchLayout({
 }) {
   return (
     <div>
-      <div className={style.searchbar_container}>
-        sss
-        {/* <input
-          placeholder="검색어를 입력해주세요... "
-          value={search}
-          onKeyDown={handleKeydown}
-          onChange={handleChange}
-        /> */}
-        {/* <button onClick={handleClickButton}>검색</button> */}
-      </div>
+      <SearchBar />
       {children}
     </div>
   );
