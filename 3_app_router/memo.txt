@@ -5,6 +5,32 @@ App Router
 - 라우팅 / 레이아웃 / 사전렌더링
 - ServerComponent / Streaming 지원
 
-- page.tsx + layout.tsx로 구성된다.
+- app이라는 폴더 기반으로 라우팅이 결정
+- 폴더 => page.tsx + layout.tsx로 구성
+- params와 쿼리스트링이 페이지 컴포넌트의 props로 전달됨
+
+------------------------------------------------------------------------
+
+export default async function SearchPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q: string }>;
+}) {
+  const { q } = await searchParams;
+
+  return <div>검색 페이지 q: {q}</div>;
+}
+
+------------------------------------------------------------------------
+
+export default async function BookDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+
+  return <div>book/[id] {id} </div>;
+}
 
 ------------------------------------------------------------------------
