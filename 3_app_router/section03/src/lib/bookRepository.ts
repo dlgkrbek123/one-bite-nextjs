@@ -6,7 +6,7 @@ export const getAllBooks = async (): Promise<BookData[] | null> => {
   const url = `${BE_ENDPOINT}/book`;
 
   try {
-    const response = await fetch(url, { cache: "no-store" });
+    const response = await fetch(url, { cache: "force-cache" });
     if (!response.ok) throw new Error();
 
     return response.json();
@@ -21,7 +21,7 @@ export const getRandomBooks = async (): Promise<BookData[] | null> => {
   const url = `${BE_ENDPOINT}/book/random`;
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { next: { revalidate: 5 } });
     if (!response.ok) throw new Error();
 
     return response.json();

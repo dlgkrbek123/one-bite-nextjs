@@ -44,6 +44,50 @@ fetch(url, { cache: 'force-cache' })
 
 ------------------------------------------------------------------------
 
+페이지 캐싱
+
+Full Route Cache
+- Nextjs 서버에서 빌드타임에 특정페이지의 렌더링 결과를 캐싱하는 기능
+- SSG랑 비슷
+
+빌드시 페이지가 Static / Dynamic으로 분류됨
+  - 접속요청 받을때마다 변화가 생기거나 데이터가 변경되는 경우 Dynamic으로 분류됨 
+    - DataFetching할떄 캐싱없으면
+    - 동적 함수(query, param, cookie, header )를 사용하는 경우
+
+동적함수가 없고 데이터페칭이 없거나 DataCache를 사용하는 경우 Static으로 분류됨
+- Static페이지에 풀 라우트 캐시가 적용됨
+
+빌드타임에는 searchParams가 없다.
+- build시 오류 발생가능
+- 클라이언트에서만 실행되게 해야함
+- <Suspense></Suspense>로 감싸셈
+- useSearchParams는 비동기 hooks
+
+------------------------------------------------------------------------
+
+generateStaticParams를 지정해서 정적으로 생성해야할 경로 지정
+- 이거 넣으면 staticPage로 강제로 설정됨
+
+// id 1,2,3은 정적 생성
+// 4는 실시간 동적페이지가 생성됨
+export function generateStaticParams() {
+  return [{ id: "1" }, { id: "2 " }, { id: "3" }];
+}
+
+export const dynamicParams = false 
+// 1,2,3이외에는 404로 보내기
+// 기본값 true
+
+------------------------------------------------------------------------
+
+Suspense
+- React에 추가된 컴포넌트
+- 미완성
+- 사전 렌더링할때 렌더링안하고 fallback 그림
+
+------------------------------------------------------------------------
+
 NEXT_PUBLIC_
 - 이거 접두사로 안 붙히면 서버측에서만 접근가능한 환경변수가 되어버림
 
