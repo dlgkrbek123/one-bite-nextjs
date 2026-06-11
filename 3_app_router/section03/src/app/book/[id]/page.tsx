@@ -1,4 +1,5 @@
 import style from "./page.module.css";
+import * as BookRepository from "@/lib/bookRepository";
 
 const mockData = {
   id: 1,
@@ -12,20 +13,17 @@ const mockData = {
     "https://shopping-phinf.pstatic.net/main_3888828/38888282618.20230913071643.jpg",
 };
 
-export default function Page({
+export default async function Page({
   params,
 }: {
-  params: { id: string | string[] };
+  params: Promise<{ id: string | string[] }>;
 }) {
-  const {
-    id,
-    title,
-    subTitle,
-    description,
-    author,
-    publisher,
-    coverImgUrl,
-  } = mockData;
+  const id = (await params).id?.toString() ?? "";
+  const book = await BookRepository.getBookData(Number(id));
+
+  if (book === null) return <div>에러가 발생하였습니다.</div>;
+
+  const { title, subTitle, description, author, publisher, coverImgUrl } = book;
 
   return (
     <div className={style.container}>
