@@ -38,7 +38,7 @@ export const searchBooks = async (
   const url = `${BE_ENDPOINT}/book/search?q=${keyword}`;
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, { cache: "force-cache" });
     if (!response.ok) throw new Error();
 
     return response.json();

@@ -1,18 +1,43 @@
 import BookItem from "@/components/BookItem";
 import style from "./page.module.css";
-import books from "@/mock/books.json";
 import * as BookRepository from "@/lib/bookRepository";
+import { delay } from "@/utils/delay";
+import { Suspense } from "react";
+import BookItemSkeleton from "@/components/BookItemSkeleton";
+
+export const dynamic = "force-dynamic"; // 라우트 세그먼트
 
 export default async function Home() {
   return (
     <div className={style.container}>
-      <RecommendBooks />
-      <AllBooks />
+      <Suspense
+        fallback={
+          <>
+            <BookItemSkeleton />
+            <BookItemSkeleton />
+            <BookItemSkeleton />
+          </>
+        }
+      >
+        <RecommendBooks />
+      </Suspense>
+      <Suspense
+        fallback={
+          <>
+            <BookItemSkeleton />
+            <BookItemSkeleton />
+            <BookItemSkeleton />
+          </>
+        }
+      >
+        <AllBooks />
+      </Suspense>
     </div>
   );
 }
 
 const RecommendBooks = async () => {
+  await delay(3000);
   const randomBooks = await BookRepository.getRandomBooks();
 
   if (randomBooks === null) return <div>에러가 발생했습니다.</div>;
@@ -28,6 +53,7 @@ const RecommendBooks = async () => {
 };
 
 const AllBooks = async () => {
+  await delay(1500);
   const allBooks = await BookRepository.getAllBooks();
 
   if (allBooks === null) return <div>에러가 발생했습니다.</div>;

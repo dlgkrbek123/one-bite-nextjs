@@ -1,17 +1,42 @@
 import BookItem from "@/components/BookItem";
+import BookItemSkeleton from "@/components/BookItemSkeleton";
 import * as BookRepository from "@/lib/bookRepository";
+import { delay } from "@/utils/delay";
+import { Suspense } from "react";
 
 export default async function Page({
   searchParams,
 }: {
-  searchParams: {
+  searchParams: Promise<{
     q?: string;
-  };
+  }>;
 }) {
-  const keyword = searchParams.q?.toString() ?? "";
-  const books = await BookRepository.searchBooks(keyword);
+  const { q = "" } = await searchParams;
 
-  if (books === null) return <div>에러가 발생했습니다.</div>;
+  return (
+    <Suspense
+      key={q}
+      fallback={
+        <>
+          <BookItemSkeleton />
+          <BookItemSkeleton />
+          <BookItemSkeleton />
+        </>
+      }
+    >
+      <SearchResult q={q} />
+    </Suspense>
+  );
+}
+
+const SearchResult = async ({ q }: { q: string }) => {
+  await delay(1500);
+
+  const books = await BookRepository.searchBooks(q);
+
+  if (books === null) {
+    return <div>에러가 발생했습니다.</div>;
+  }
 
   return (
     <div>
@@ -20,4 +45,4 @@ export default async function Page({
       ))}
     </div>
   );
-}
+};
