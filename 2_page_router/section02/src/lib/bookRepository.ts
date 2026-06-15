@@ -1,6 +1,6 @@
 import { BookData } from "@/types/BookData";
 
-const BE_ENDPOINT = "http://localhost:12345";
+export const BE_ENDPOINT = "http://localhost:12345";
 
 export const getAllBooks = async (): Promise<BookData[]> => {
   const url = `${BE_ENDPOINT}/book`;

@@ -1,4 +1,5 @@
 import { BookData } from "@/types/BookData";
+import { ReviewData } from "@/types/ReviewData";
 
 const BE_ENDPOINT = "http://localhost:12345";
 
@@ -54,6 +55,26 @@ export const getBookData = async (bookId: number): Promise<BookData | null> => {
 
   try {
     const response = await fetch(url);
+    if (!response.ok) throw new Error();
+
+    return response.json();
+  } catch (error) {
+    console.error(error);
+
+    return null;
+  }
+};
+
+export const getBookReviews = async (
+  bookId: number,
+): Promise<ReviewData[] | null> => {
+  const url = `${BE_ENDPOINT}/review/book/${bookId}`;
+
+  try {
+    const response = await fetch(url, {
+      cache: "force-cache",
+      next: { tags: [`review-${bookId}`] },
+    });
     if (!response.ok) throw new Error();
 
     return response.json();
