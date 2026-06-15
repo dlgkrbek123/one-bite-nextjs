@@ -4,6 +4,26 @@ import * as BookRepository from "@/lib/bookRepository";
 import { delay } from "@/utils/delay";
 import { Suspense } from "react";
 
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    q?: string;
+  }>;
+}) {
+  const { q = "" } = await searchParams;
+
+  return {
+    title: `${q} : 한입북스 검색`,
+    description: "한입 북스에 등록된 도서를 만나보세요",
+    openGraph: {
+      title: `${q} : 한입북스 검색`,
+      description: "한입 북스에 등록된 도서를 만나보세요",
+      images: ["/thumbnail.png"],
+    },
+  };
+}
+
 export default async function Page({
   searchParams,
 }: {

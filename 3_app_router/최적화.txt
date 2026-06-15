@@ -14,3 +14,39 @@ Next에서 자체적으로 이미지 최적화를 제공 (<Iamge />)
   - next.config.js
 
 ------------------------------------------------------------------------
+
+page컴포넌트에서 metadata라는 변수를 export해서 SEO 정의
+favicon은 app폴더 밑에있는거 교체하셈
+
+export const metadata: Metadata = {
+  title: "한입 북스",
+  description: "한입 북스에 등록된 도서를 만나보세요",
+  openGraph: {
+    title: "한입 북스",
+    description: "한입 북스에 등록된 도서를 만나보세요",
+    images: ["/thumbnail.png"],
+  },
+};
+
+
+export async function generateMetadata({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    q?: string;
+  }>;
+}) {
+  const { q = "" } = await searchParams;
+
+  return {
+    title: `${q} : 한입북스 검색`,
+    description: "한입 북스에 등록된 도서를 만나보세요",
+    openGraph: {
+      title: `${q} : 한입북스 검색`,
+      description: "한입 북스에 등록된 도서를 만나보세요",
+      images: ["/thumbnail.png"],
+    },
+  };
+}
+
+------------------------------------------------------------------------

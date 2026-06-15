@@ -4,8 +4,19 @@ import * as BookRepository from "@/lib/bookRepository";
 import { delay } from "@/utils/delay";
 import { Suspense } from "react";
 import BookItemSkeleton from "@/components/BookItemSkeleton";
+import { Metadata } from "next";
 
 export const dynamic = "force-dynamic"; // 라우트 세그먼트
+
+export const metadata: Metadata = {
+  title: "한입 북스",
+  description: "한입 북스에 등록된 도서를 만나보세요",
+  openGraph: {
+    title: "한입 북스",
+    description: "한입 북스에 등록된 도서를 만나보세요",
+    images: ["/thumbnail.png"],
+  },
+};
 
 export default async function Home() {
   return (

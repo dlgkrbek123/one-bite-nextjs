@@ -7,6 +7,25 @@ export function generateStaticParams() {
   return [{ id: "1" }, { id: "2 " }, { id: "3" }];
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string | string[] }>;
+}) {
+  const bookId = (await params).id?.toString() ?? "";
+  const book = await BookRepository.getBookData(Number(bookId));
+
+  return {
+    title: book?.title ?? "",
+    description: book?.description ?? "",
+    openGraph: {
+      title: book?.title ?? "",
+      description: book?.description ?? "",
+      images: [book?.coverImgUrl ?? ""],
+    },
+  };
+}
+
 export default async function Page({
   params,
 }: {
